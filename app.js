@@ -35,6 +35,17 @@ app.get('/login', (req, res) => {
     res.render('login');
   });
 
+  // Route for displaying the new post form
+  app.get('/posts/:id', async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id);
+      res.render('post', { post });
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send();
+    }
+  });
+
 // Route for displaying the user's blog posts
 app.get('/blog-posts', (req, res) => {
     // Fetch the blog posts from the database
@@ -88,6 +99,7 @@ app.post('/login', (req, res) => {
       if (row && bcrypt.compareSync(password, row.password)) {
         // Log the user in and redirect to their blog posts page
         res.redirect('/blog-posts');
+        //res.redirect('/posts');
       } else {
         // If the login failed, redirect back to the login page with an error message
         res.redirect('/login?error=Invalid username or password');
