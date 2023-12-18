@@ -99,7 +99,7 @@ app.post('/login', (req, res) => {
       if (row && bcrypt.compareSync(password, row.password)) {
         // Log the user in and redirect to their blog posts page
         res.redirect('/blog-posts');
-        //res.redirect('/posts');
+    
       } else {
         // If the login failed, redirect back to the login page with an error message
         res.redirect('/login?error=Invalid username or password');
